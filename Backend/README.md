@@ -64,3 +64,61 @@ The request body must be in JSON format and include the following fields:
 ### Status Codes
 - `201 Created`: User successfully registered.
 - `400 Bad Request`: Validation error in the input data.
+
+## Endpoint: `/users/login`
+
+### Description
+This endpoint is used to authenticate a user. It validates the input credentials and returns a JWT token if the credentials are correct.
+
+### Method
+`POST`
+
+### Request Body
+The request body must be in JSON format and include the following fields:
+
+| Field     | Type   | Required | Description                                      |
+|-----------|--------|----------|--------------------------------------------------|
+| `email`   | String | Yes      | The user's email address (must be valid).        |
+| `password`| String | Yes      | The user's password (minimum 6 characters).      |
+
+### Example Request
+```json
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+```
+
+### Response
+
+#### Success (200 OK)
+```json
+{
+  "token": "jwt_token_here",
+  "user": {
+    "_id": "user_id_here",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "johndoe@example.com"
+  }
+}
+```
+
+#### Error (401 Unauthorized)
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid email or password",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
+
+### Status Codes
+- `200 OK`: User successfully authenticated.
+- `401 Unauthorized`: Invalid email or password.
