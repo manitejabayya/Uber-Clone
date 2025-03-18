@@ -122,3 +122,102 @@ The request body must be in JSON format and include the following fields:
 ### Status Codes
 - `200 OK`: User successfully authenticated.
 - `401 Unauthorized`: Invalid email or password.
+
+## Endpoint: `/users/profile`
+
+### Description
+This endpoint is used to retrieve the profile information of the authenticated user.
+
+### Method
+`GET`
+
+### Headers
+The request must include the following header:
+
+| Header         | Type   | Required | Description                           |
+|----------------|--------|----------|---------------------------------------|
+| `Authorization`| String | Yes      | Bearer token for user authentication. |
+
+### Example Request
+```
+GET /users/profile HTTP/1.1
+Authorization: Bearer jwt_token_here
+```
+
+### Response
+
+#### Success (200 OK)
+```json
+{
+  "_id": "user_id_here",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "johndoe@example.com"
+}
+```
+
+#### Error (401 Unauthorized)
+```json
+{
+  "errors": [
+    {
+      "msg": "Unauthorized access",
+      "param": "Authorization",
+      "location": "headers"
+    }
+  ]
+}
+```
+
+### Status Codes
+- `200 OK`: User profile retrieved successfully.
+- `401 Unauthorized`: Missing or invalid authentication token.
+
+## Endpoint: `/users/logout`
+
+### Description
+This endpoint is used to log out the authenticated user by invalidating their session.
+
+### Method
+`POST`
+
+### Headers
+The request must include the following header:
+
+| Header         | Type   | Required | Description                           |
+|----------------|--------|----------|---------------------------------------|
+| `Authorization`| String | Yes      | Bearer token for user authentication. |
+
+### Example Request
+```
+POST /users/logout HTTP/1.1
+Authorization: Bearer jwt_token_here
+```
+
+### Response
+
+#### Success (200 OK)
+```json
+{
+  "message": "User successfully logged out"
+}
+```
+
+#### Error (401 Unauthorized)
+```json
+{
+  "errors": [
+    {
+      "msg": "Unauthorized access",
+      "param": "Authorization",
+      "location": "headers"
+    }
+  ]
+}
+```
+
+### Status Codes
+- `200 OK`: User successfully logged out.
+- `401 Unauthorized`: Missing or invalid authentication token.
