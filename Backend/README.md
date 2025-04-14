@@ -221,3 +221,93 @@ Authorization: Bearer jwt_token_here
 ### Status Codes
 - `200 OK`: User successfully logged out.
 - `401 Unauthorized`: Missing or invalid authentication token.
+
+## Endpoint: `/captains/register`
+
+### Description
+This endpoint is used to register a new captain. It validates the input data and creates a new captain in the database.
+
+### Method
+`POST`
+
+### Request Body
+The request body must be in JSON format and include the following fields:
+
+| Field                  | Type   | Required | Description                                      |
+|------------------------|--------|----------|--------------------------------------------------|
+| `fullname`             | Object | Yes      | An object containing the captain's full name.    |
+| `fullname.firstname`   | String | Yes      | The captain's first name (minimum 3 characters). |
+| `fullname.lastname`    | String | Yes      | The captain's last name (minimum 3 characters).  |
+| `email`                | String | Yes      | The captain's email address (must be valid).     |
+| `password`             | String | Yes      | The captain's password (minimum 6 characters).   |
+| `vehicle`              | Object | Yes      | An object containing the vehicle details.        |
+| `vehicle.color`        | String | Yes      | The vehicle's color.                             |
+| `vehicle.plate`        | String | Yes      | The vehicle's license plate.                     |
+| `vehicle.capacity`     | Number | Yes      | The vehicle's capacity.                          |
+| `vehicle.vehicleType`  | String | Yes      | The type of the vehicle.                         |
+| `vehicle.location`     | Object | Yes      | An object containing the vehicle's location.     |
+| `vehicle.location.lat` | Number | Yes      | The latitude of the vehicle's location.          |
+| `vehicle.location.lng` | Number | Yes      | The longitude of the vehicle's location.         |
+
+### Example Request
+```json
+{
+  "fullname": {
+    "firstname": "Jane",
+    "lastname": "Doe"
+  },
+  "email": "janedoe@example.com",
+  "password": "securepassword",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "Sedan",
+    "location": {
+      "lat": 37.7749,
+      "lng": -122.4194
+    }
+  }
+}
+```
+
+### Response
+
+#### Success (201 Created)
+```json
+{
+  "_id": "captain_id_here",
+  "fullname": {
+    "firstname": "Jane",
+    "lastname": "Doe"
+  },
+  "email": "janedoe@example.com",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "Sedan",
+    "location": {
+      "lat": 37.7749,
+      "lng": -122.4194
+    }
+  }
+}
+```
+
+#### Error (400 Bad Request)
+```json
+{
+  "errors": [
+    {
+      "msg": "First name is required",
+      "param": "fullname.firstname",
+      "location": "body"
+    }
+  ]
+}
+```
+
+### Status Codes
+- `201 Created`: Captain successfully registered.
+- `400 Bad Request`: Validation error in the input data.
