@@ -231,41 +231,22 @@ This endpoint is used to register a new captain. It validates the input data and
 `POST`
 
 ### Request Body
-The request body must be in JSON format and include the following fields:
-
-| Field                  | Type   | Required | Description                                      |
-|------------------------|--------|----------|--------------------------------------------------|
-| `fullname`             | Object | Yes      | An object containing the captain's full name.    |
-| `fullname.firstname`   | String | Yes      | The captain's first name (minimum 3 characters). |
-| `fullname.lastname`    | String | Yes      | The captain's last name (minimum 3 characters).  |
-| `email`                | String | Yes      | The captain's email address (must be valid).     |
-| `password`             | String | Yes      | The captain's password (minimum 6 characters).   |
-| `vehicle`              | Object | Yes      | An object containing the vehicle details.        |
-| `vehicle.color`        | String | Yes      | The vehicle's color.                             |
-| `vehicle.plate`        | String | Yes      | The vehicle's license plate.                     |
-| `vehicle.capacity`     | Number | Yes      | The vehicle's capacity.                          |
-| `vehicle.vehicleType`  | String | Yes      | The type of the vehicle.                         |
-| `vehicle.location`     | Object | Yes      | An object containing the vehicle's location.     |
-| `vehicle.location.lat` | Number | Yes      | The latitude of the vehicle's location.          |
-| `vehicle.location.lng` | Number | Yes      | The longitude of the vehicle's location.         |
-
-### Example Request
 ```json
 {
   "fullname": {
-    "firstname": "Jane",
-    "lastname": "Doe"
+    "firstname": "Jane", // Required, must be a string, minimum 3 characters
+    "lastname": "Doe"    // Required, must be a string, minimum 3 characters
   },
-  "email": "janedoe@example.com",
-  "password": "securepassword",
+  "email": "janedoe@example.com", // Required, must be a valid email
+  "password": "securepassword",   // Required, must be a string, minimum 6 characters
   "vehicle": {
-    "color": "Red",
-    "plate": "ABC123",
-    "capacity": 4,
-    "vehicleType": "Sedan",
+    "color": "Red",               // Required, must be a string
+    "plate": "ABC123",            // Required, must be a string
+    "capacity": 4,                // Required, must be a number
+    "vehicleType": "Sedan",       // Required, must be a string
     "location": {
-      "lat": 37.7749,
-      "lng": -122.4194
+      "lat": 37.7749,             // Required, must be a number (latitude)
+      "lng": -122.4194            // Required, must be a number (longitude)
     }
   }
 }
@@ -276,7 +257,7 @@ The request body must be in JSON format and include the following fields:
 #### Success (201 Created)
 ```json
 {
-  "_id": "captain_id_here",
+  "_id": "captain_id_here", // Unique identifier for the captain
   "fullname": {
     "firstname": "Jane",
     "lastname": "Doe"
@@ -300,9 +281,9 @@ The request body must be in JSON format and include the following fields:
 {
   "errors": [
     {
-      "msg": "First name is required",
-      "param": "fullname.firstname",
-      "location": "body"
+      "msg": "First name is required", // Error message
+      "param": "fullname.firstname",  // Field causing the error
+      "location": "body"              // Location of the error
     }
   ]
 }
